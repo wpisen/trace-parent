@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd ">
+	<mvc:default-servlet-handler />
+
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+			</bean>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes" value="text/html;charset=UTF-8" />
+				<property name="writeAcceptCharset" value="false" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<mvc:resources mapping="/static/**" location="classpath:/static/" />
+	<mvc:resources mapping="/pages/**" location="classpath:/pages/" />
+
+	<bean id="freemarkerConfig"
+		  class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPaths" value="classpath:/page/" />
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="webnorm" value="!webnorm"></entry>
+				<entry key="weblist" value="!m1"></entry>
+				<entry key="webthum" value="!s2"></entry>
+				<entry key="l2" value="!l2"></entry>
+				<entry key="m1" value="!m1"></entry>
+				<entry key="s2" value="!s2"></entry>
+				<entry key="s1" value="!s1"></entry>
+				<entry key="s2" value="!s2"></entry>
+			</map>
+		</property>
+		<property name="freemarkerSettings">
+			<map>
+				<entry key="default_encoding" value="UTF-8" />
+				<entry key="tag_syntax" value="auto_detect" />
+				<entry key="number_format" value="#" />
+				<entry key="datetime_format" value="yyyy-MM-dd hh:mm:ss" />
+			</map>
+		</property>
+	</bean>
+	<bean id="freeMarkviewResolver"
+		  class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="suffix" value=".ftl"/>
+		<property name="cache" value="false" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="requestContextAttribute" value="request" />
+	</bean>
+
+	<bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
+	<bean id="exceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<!-- 设置日志输出级别，不定义则默认不输出警告等错误日志信息 -->
+		<property name="warnLogCategory" value="WARN"></property>
+		<!-- 默认HTTP状态码 -->
+		<property name="defaultStatusCode" value="500"></property>
+	</bean>
+
+	<mvc:view-controller path="/" view-name="redirect:/trace/requests" />
+     
+</beans>  

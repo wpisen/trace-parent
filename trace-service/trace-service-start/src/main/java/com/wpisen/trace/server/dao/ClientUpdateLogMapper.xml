@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wpisen.trace.server.dao.ClientUpdateLogMapper" >
+  <resultMap id="BaseResultMap" type="com.wpisen.trace.server.dao.entity.ClientUpdateLog" >
+    <id column="log_id" property="logId" jdbcType="INTEGER" />
+    <result column="pro_id" property="proId" jdbcType="INTEGER" />
+    <result column="app_name" property="appId" jdbcType="VARCHAR" />
+    <result column="client_id" property="clientId" jdbcType="INTEGER" />
+    <result column="previous_version_name" property="previousVersionName" jdbcType="VARCHAR" />
+    <result column="version_id" property="versionId" jdbcType="INTEGER" />
+    <result column="version_name" property="versionName" jdbcType="VARCHAR" />
+    <result column="version_md5" property="versionMd5" jdbcType="VARCHAR" />
+    <result column="version_size" property="versionSize" jdbcType="INTEGER" />
+    <result column="gateway_ip" property="gatewayIp" jdbcType="VARCHAR" />
+    <result column="client_ip" property="clientIp" jdbcType="VARCHAR" />
+    <result column="client_mac_address" property="clientMacAddress" jdbcType="VARCHAR" />
+    <result column="client_platform" property="clientPlatform" jdbcType="CHAR" />
+    <result column="surroundings" property="surroundings" jdbcType="VARCHAR" />
+    <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="consume_time" property="consumeTime" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="CHAR" />
+    <result column="fail_message" property="failMessage" jdbcType="VARCHAR" />
+    <result column="update_url" property="updateUrl" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="disable" property="disable" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    log_id, pro_id, app_name, client_id, previous_version_name, version_id, version_name, 
+    version_md5, version_size, gateway_ip, client_ip, client_mac_address, client_platform, 
+    surroundings, begin_time, consume_time, state, fail_message, update_url, create_time, 
+    last_update_time, disable
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from client_update_log
+    where log_id = #{logId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from client_update_log
+    where log_id = #{logId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wpisen.trace.server.dao.entity.ClientUpdateLog" >
+    insert into client_update_log (log_id, pro_id, app_name, 
+      client_id, previous_version_name, version_id, 
+      version_name, version_md5, version_size, 
+      gateway_ip, client_ip, client_mac_address, 
+      client_platform, surroundings, begin_time, 
+      consume_time, state, fail_message, 
+      update_url, create_time, last_update_time, 
+      disable)
+    values (#{logId,jdbcType=INTEGER}, #{proId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR},
+      #{clientId,jdbcType=INTEGER}, #{previousVersionName,jdbcType=VARCHAR}, #{versionId,jdbcType=INTEGER}, 
+      #{versionName,jdbcType=VARCHAR}, #{versionMd5,jdbcType=VARCHAR}, #{versionSize,jdbcType=INTEGER}, 
+      #{gatewayIp,jdbcType=VARCHAR}, #{clientIp,jdbcType=VARCHAR}, #{clientMacAddress,jdbcType=VARCHAR}, 
+      #{clientPlatform,jdbcType=CHAR}, #{surroundings,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, 
+      #{consumeTime,jdbcType=INTEGER}, #{state,jdbcType=CHAR}, #{failMessage,jdbcType=VARCHAR}, 
+      #{updateUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP}, 
+      #{disable,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wpisen.trace.server.dao.entity.ClientUpdateLog" >
+    insert into client_update_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        log_id,
+      </if>
+      <if test="proId != null" >
+        pro_id,
+      </if>
+      <if test="appId != null" >
+        app_name,
+      </if>
+      <if test="clientId != null" >
+        client_id,
+      </if>
+      <if test="previousVersionName != null" >
+        previous_version_name,
+      </if>
+      <if test="versionId != null" >
+        version_id,
+      </if>
+      <if test="versionName != null" >
+        version_name,
+      </if>
+      <if test="versionMd5 != null" >
+        version_md5,
+      </if>
+      <if test="versionSize != null" >
+        version_size,
+      </if>
+      <if test="gatewayIp != null" >
+        gateway_ip,
+      </if>
+      <if test="clientIp != null" >
+        client_ip,
+      </if>
+      <if test="clientMacAddress != null" >
+        client_mac_address,
+      </if>
+      <if test="clientPlatform != null" >
+        client_platform,
+      </if>
+      <if test="surroundings != null" >
+        surroundings,
+      </if>
+      <if test="beginTime != null" >
+        begin_time,
+      </if>
+      <if test="consumeTime != null" >
+        consume_time,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="failMessage != null" >
+        fail_message,
+      </if>
+      <if test="updateUrl != null" >
+        update_url,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="disable != null" >
+        disable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=INTEGER},
+      </if>
+      <if test="proId != null" >
+        #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="clientId != null" >
+        #{clientId,jdbcType=INTEGER},
+      </if>
+      <if test="previousVersionName != null" >
+        #{previousVersionName,jdbcType=VARCHAR},
+      </if>
+      <if test="versionId != null" >
+        #{versionId,jdbcType=INTEGER},
+      </if>
+      <if test="versionName != null" >
+        #{versionName,jdbcType=VARCHAR},
+      </if>
+      <if test="versionMd5 != null" >
+        #{versionMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="versionSize != null" >
+        #{versionSize,jdbcType=INTEGER},
+      </if>
+      <if test="gatewayIp != null" >
+        #{gatewayIp,jdbcType=VARCHAR},
+      </if>
+      <if test="clientIp != null" >
+        #{clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="clientMacAddress != null" >
+        #{clientMacAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="clientPlatform != null" >
+        #{clientPlatform,jdbcType=CHAR},
+      </if>
+      <if test="surroundings != null" >
+        #{surroundings,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consumeTime != null" >
+        #{consumeTime,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=CHAR},
+      </if>
+      <if test="failMessage != null" >
+        #{failMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUrl != null" >
+        #{updateUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        #{disable,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wpisen.trace.server.dao.entity.ClientUpdateLog" >
+    update client_update_log
+    <set >
+      <if test="proId != null" >
+        pro_id = #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        app_name = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="clientId != null" >
+        client_id = #{clientId,jdbcType=INTEGER},
+      </if>
+      <if test="previousVersionName != null" >
+        previous_version_name = #{previousVersionName,jdbcType=VARCHAR},
+      </if>
+      <if test="versionId != null" >
+        version_id = #{versionId,jdbcType=INTEGER},
+      </if>
+      <if test="versionName != null" >
+        version_name = #{versionName,jdbcType=VARCHAR},
+      </if>
+      <if test="versionMd5 != null" >
+        version_md5 = #{versionMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="versionSize != null" >
+        version_size = #{versionSize,jdbcType=INTEGER},
+      </if>
+      <if test="gatewayIp != null" >
+        gateway_ip = #{gatewayIp,jdbcType=VARCHAR},
+      </if>
+      <if test="clientIp != null" >
+        client_ip = #{clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="clientMacAddress != null" >
+        client_mac_address = #{clientMacAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="clientPlatform != null" >
+        client_platform = #{clientPlatform,jdbcType=CHAR},
+      </if>
+      <if test="surroundings != null" >
+        surroundings = #{surroundings,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consumeTime != null" >
+        consume_time = #{consumeTime,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=CHAR},
+      </if>
+      <if test="failMessage != null" >
+        fail_message = #{failMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUrl != null" >
+        update_url = #{updateUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        disable = #{disable,jdbcType=BIT},
+      </if>
+    </set>
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wpisen.trace.server.dao.entity.ClientUpdateLog" >
+    update client_update_log
+    set pro_id = #{proId,jdbcType=INTEGER},
+      app_name = #{appId,jdbcType=VARCHAR},
+      client_id = #{clientId,jdbcType=INTEGER},
+      previous_version_name = #{previousVersionName,jdbcType=VARCHAR},
+      version_id = #{versionId,jdbcType=INTEGER},
+      version_name = #{versionName,jdbcType=VARCHAR},
+      version_md5 = #{versionMd5,jdbcType=VARCHAR},
+      version_size = #{versionSize,jdbcType=INTEGER},
+      gateway_ip = #{gatewayIp,jdbcType=VARCHAR},
+      client_ip = #{clientIp,jdbcType=VARCHAR},
+      client_mac_address = #{clientMacAddress,jdbcType=VARCHAR},
+      client_platform = #{clientPlatform,jdbcType=CHAR},
+      surroundings = #{surroundings,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      consume_time = #{consumeTime,jdbcType=INTEGER},
+      state = #{state,jdbcType=CHAR},
+      fail_message = #{failMessage,jdbcType=VARCHAR},
+      update_url = #{updateUrl,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      disable = #{disable,jdbcType=BIT}
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+</mapper>

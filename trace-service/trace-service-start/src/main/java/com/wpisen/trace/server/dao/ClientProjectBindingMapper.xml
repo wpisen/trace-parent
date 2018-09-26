@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wpisen.trace.server.dao.ClientProjectBindingMapper" >
+  <resultMap id="BaseResultMap" type="com.wpisen.trace.server.dao.entity.ClientProjectBinding" >
+    <id column="bind_id" property="bindId" jdbcType="INTEGER" />
+    <result column="client_id" property="clientId" jdbcType="INTEGER" />
+    <result column="pro_id" property="proId" jdbcType="INTEGER" />
+    <result column="platform" property="platform" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="disable" property="disable" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    bind_id, client_id, pro_id, platform, create_time, last_update_time, disable
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from client_project_binding
+    where bind_id = #{bindId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByProIdAndPlatform" resultMap="BaseResultMap" resultType="com.wpisen.trace.server.dao.entity.ClientProjectBinding">
+    select
+    <include refid="Base_Column_List" />
+    from client_project_binding
+    where pro_id = #{proId,jdbcType=INTEGER}
+    and platform=#{platform,jdbcType=CHAR}
+    and disable=1
+    limit 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from client_project_binding
+    where bind_id = #{bindId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wpisen.trace.server.dao.entity.ClientProjectBinding" >
+    insert into client_project_binding (bind_id, client_id, pro_id, 
+      platform, create_time, last_update_time, 
+      disable)
+    values (#{bindId,jdbcType=INTEGER}, #{clientId,jdbcType=INTEGER}, #{proId,jdbcType=INTEGER}, 
+      #{platform,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP}, 
+      #{disable,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wpisen.trace.server.dao.entity.ClientProjectBinding" >
+    insert into client_project_binding
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bindId != null" >
+        bind_id,
+      </if>
+      <if test="clientId != null" >
+        client_id,
+      </if>
+      <if test="proId != null" >
+        pro_id,
+      </if>
+      <if test="platform != null" >
+        platform,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="disable != null" >
+        disable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bindId != null" >
+        #{bindId,jdbcType=INTEGER},
+      </if>
+      <if test="clientId != null" >
+        #{clientId,jdbcType=INTEGER},
+      </if>
+      <if test="proId != null" >
+        #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="platform != null" >
+        #{platform,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        #{disable,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wpisen.trace.server.dao.entity.ClientProjectBinding" >
+    update client_project_binding
+    <set >
+      <if test="clientId != null" >
+        client_id = #{clientId,jdbcType=INTEGER},
+      </if>
+      <if test="proId != null" >
+        pro_id = #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="platform != null" >
+        platform = #{platform,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        disable = #{disable,jdbcType=BIT},
+      </if>
+    </set>
+    where bind_id = #{bindId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wpisen.trace.server.dao.entity.ClientProjectBinding" >
+    update client_project_binding
+    set client_id = #{clientId,jdbcType=INTEGER},
+      pro_id = #{proId,jdbcType=INTEGER},
+      platform = #{platform,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      disable = #{disable,jdbcType=BIT}
+    where bind_id = #{bindId,jdbcType=INTEGER}
+  </update>
+</mapper>

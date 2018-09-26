@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wpisen.trace.server.dao.ClientVersionMapper" >
+  <resultMap id="BaseResultMap" type="com.wpisen.trace.server.dao.entity.ClientVersion" >
+    <id column="version_id" property="versionId" jdbcType="INTEGER" />
+    <result column="client_id" property="clientId" jdbcType="INTEGER" />
+    <result column="version_name" property="versionName" jdbcType="VARCHAR" />
+    <result column="version_number" property="versionNumber" jdbcType="INTEGER" />
+    <result column="data_MD5" property="dataMd5" jdbcType="VARCHAR" />
+    <result column="describes" property="describes" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="disable" property="disable" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wpisen.trace.server.dao.entity.ClientVersion" extends="BaseResultMap" >
+    <result column="data_byte" property="dataByte" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    version_id, client_id, version_name, version_number, data_MD5, describes, create_time, 
+    last_update_time, disable
+  </sql>
+  <sql id="Blob_Column_List" >
+    data_byte
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from client_version
+    where version_id = #{versionId,jdbcType=INTEGER}
+  </select>
+  <select id="selectClientMaxVersion" resultMap="BaseResultMap" resultType="com.wpisen.trace.server.dao.entity.ClientVersion">
+    select
+    <include refid="Base_Column_List" />
+    from client_version
+    where client_id = #{clientId,jdbcType=INTEGER}
+    and disable=1
+    order by version_number desc
+    limit 1
+  </select>
+  
+  <select id="selectByMd5" resultMap="ResultMapWithBLOBs" resultType="com.wpisen.trace.server.dao.entity.ClientVersion">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from client_version
+    where data_MD5 = #{md5,jdbcType=CHAR}
+    and disable=1
+     limit 1
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from client_version
+    where version_id = #{versionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wpisen.trace.server.dao.entity.ClientVersion" >
+    insert into client_version (version_id, client_id, version_name, 
+      version_number, data_MD5, describes, 
+      create_time, last_update_time, disable, 
+      data_byte)
+    values (#{versionId,jdbcType=INTEGER}, #{clientId,jdbcType=INTEGER}, #{versionName,jdbcType=VARCHAR}, 
+      #{versionNumber,jdbcType=INTEGER}, #{dataMd5,jdbcType=VARCHAR}, #{describes,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{disable,jdbcType=BIT}, 
+      #{dataByte,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wpisen.trace.server.dao.entity.ClientVersion" >
+    insert into client_version
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="versionId != null" >
+        version_id,
+      </if>
+      <if test="clientId != null" >
+        client_id,
+      </if>
+      <if test="versionName != null" >
+        version_name,
+      </if>
+      <if test="versionNumber != null" >
+        version_number,
+      </if>
+      <if test="dataMd5 != null" >
+        data_MD5,
+      </if>
+      <if test="describes != null" >
+        describes,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="disable != null" >
+        disable,
+      </if>
+      <if test="dataByte != null" >
+        data_byte,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="versionId != null" >
+        #{versionId,jdbcType=INTEGER},
+      </if>
+      <if test="clientId != null" >
+        #{clientId,jdbcType=INTEGER},
+      </if>
+      <if test="versionName != null" >
+        #{versionName,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNumber != null" >
+        #{versionNumber,jdbcType=INTEGER},
+      </if>
+      <if test="dataMd5 != null" >
+        #{dataMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="describes != null" >
+        #{describes,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        #{disable,jdbcType=BIT},
+      </if>
+      <if test="dataByte != null" >
+        #{dataByte,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wpisen.trace.server.dao.entity.ClientVersion" >
+    update client_version
+    <set >
+      <if test="clientId != null" >
+        client_id = #{clientId,jdbcType=INTEGER},
+      </if>
+      <if test="versionName != null" >
+        version_name = #{versionName,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNumber != null" >
+        version_number = #{versionNumber,jdbcType=INTEGER},
+      </if>
+      <if test="dataMd5 != null" >
+        data_MD5 = #{dataMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="describes != null" >
+        describes = #{describes,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        disable = #{disable,jdbcType=BIT},
+      </if>
+      <if test="dataByte != null" >
+        data_byte = #{dataByte,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where version_id = #{versionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wpisen.trace.server.dao.entity.ClientVersion" >
+    update client_version
+    set client_id = #{clientId,jdbcType=INTEGER},
+      version_name = #{versionName,jdbcType=VARCHAR},
+      version_number = #{versionNumber,jdbcType=INTEGER},
+      data_MD5 = #{dataMd5,jdbcType=VARCHAR},
+      describes = #{describes,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      disable = #{disable,jdbcType=BIT},
+      data_byte = #{dataByte,jdbcType=LONGVARBINARY}
+    where version_id = #{versionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wpisen.trace.server.dao.entity.ClientVersion" >
+    update client_version
+    set client_id = #{clientId,jdbcType=INTEGER},
+      version_name = #{versionName,jdbcType=VARCHAR},
+      version_number = #{versionNumber,jdbcType=INTEGER},
+      data_MD5 = #{dataMd5,jdbcType=VARCHAR},
+      describes = #{describes,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      disable = #{disable,jdbcType=BIT}
+    where version_id = #{versionId,jdbcType=INTEGER}
+  </update>
+</mapper>

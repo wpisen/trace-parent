@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wpisen.trace.server.dao.StaticPropertiesMapper" >
+  <resultMap id="BaseResultMap" type="com.wpisen.trace.server.dao.entity.StaticProperties" >
+    <id column="static_id" property="staticId" jdbcType="INTEGER" />
+    <result column="static_key" property="staticKey" jdbcType="VARCHAR" />
+    <result column="static_value" property="staticValue" jdbcType="VARCHAR" />
+    <result column="history" property="history" jdbcType="INTEGER" />
+    <result column="last_updat_time" property="lastUpdatTime" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="disable" property="disable" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wpisen.trace.server.dao.entity.StaticProperties" extends="BaseResultMap" >
+    <result column="static_text" property="staticText" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    static_id, static_key, static_value, history, last_updat_time, remarks, type, disable
+  </sql>
+  <sql id="Blob_Column_List" >
+    static_text
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from static_properties
+    where static_id = #{staticId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByKey" resultMap="ResultMapWithBLOBs" resultType="com.wpisen.trace.server.dao.entity.StaticProperties">
+    SELECT
+    <include refid="Base_Column_List"/>
+    ,
+    <include refid="Blob_Column_List"/>
+    from static_properties
+    where static_key = #{key,jdbcType=VARCHAR}
+    and history=0;
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from static_properties
+    where static_id = #{staticId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wpisen.trace.server.dao.entity.StaticProperties" >
+    insert into static_properties (static_id, static_key, static_value, 
+      history, last_updat_time, remarks, 
+      type, disable, static_text
+      )
+    values (#{staticId,jdbcType=INTEGER}, #{staticKey,jdbcType=VARCHAR}, #{staticValue,jdbcType=VARCHAR}, 
+      #{history,jdbcType=INTEGER}, #{lastUpdatTime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{disable,jdbcType=BIT}, #{staticText,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wpisen.trace.server.dao.entity.StaticProperties" >
+    insert into static_properties
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="staticId != null" >
+        static_id,
+      </if>
+      <if test="staticKey != null" >
+        static_key,
+      </if>
+      <if test="staticValue != null" >
+        static_value,
+      </if>
+      <if test="history != null" >
+        history,
+      </if>
+      <if test="lastUpdatTime != null" >
+        last_updat_time,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="disable != null" >
+        disable,
+      </if>
+      <if test="staticText != null" >
+        static_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="staticId != null" >
+        #{staticId,jdbcType=INTEGER},
+      </if>
+      <if test="staticKey != null" >
+        #{staticKey,jdbcType=VARCHAR},
+      </if>
+      <if test="staticValue != null" >
+        #{staticValue,jdbcType=VARCHAR},
+      </if>
+      <if test="history != null" >
+        #{history,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdatTime != null" >
+        #{lastUpdatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="disable != null" >
+        #{disable,jdbcType=BIT},
+      </if>
+      <if test="staticText != null" >
+        #{staticText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wpisen.trace.server.dao.entity.StaticProperties" >
+    update static_properties
+    <set >
+      <if test="staticKey != null" >
+        static_key = #{staticKey,jdbcType=VARCHAR},
+      </if>
+      <if test="staticValue != null" >
+        static_value = #{staticValue,jdbcType=VARCHAR},
+      </if>
+      <if test="history != null" >
+        history = #{history,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdatTime != null" >
+        last_updat_time = #{lastUpdatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="disable != null" >
+        disable = #{disable,jdbcType=BIT},
+      </if>
+      <if test="staticText != null" >
+        static_text = #{staticText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where static_id = #{staticId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wpisen.trace.server.dao.entity.StaticProperties" >
+    update static_properties
+    set static_key = #{staticKey,jdbcType=VARCHAR},
+      static_value = #{staticValue,jdbcType=VARCHAR},
+      history = #{history,jdbcType=INTEGER},
+      last_updat_time = #{lastUpdatTime,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      disable = #{disable,jdbcType=BIT},
+      static_text = #{staticText,jdbcType=LONGVARCHAR}
+    where static_id = #{staticId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wpisen.trace.server.dao.entity.StaticProperties" >
+    update static_properties
+    set static_key = #{staticKey,jdbcType=VARCHAR},
+      static_value = #{staticValue,jdbcType=VARCHAR},
+      history = #{history,jdbcType=INTEGER},
+      last_updat_time = #{lastUpdatTime,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      disable = #{disable,jdbcType=BIT}
+    where static_id = #{staticId,jdbcType=INTEGER}
+  </update>
+</mapper>

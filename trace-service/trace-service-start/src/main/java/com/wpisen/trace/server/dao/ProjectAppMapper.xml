@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wpisen.trace.server.dao.ProjectAppMapper" >
+  <resultMap id="BaseResultMap" type="com.wpisen.trace.server.dao.entity.ProjectApp" >
+    <id column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="pro_id" property="proId" jdbcType="INTEGER" />
+    <result column="app_name" property="appName" jdbcType="VARCHAR" />
+    <result column="root_name" property="rootName" jdbcType="VARCHAR" />
+    <result column="namespace" property="namespace" jdbcType="VARCHAR" />
+    <result column="platform" property="platform" jdbcType="CHAR" />
+    <result column="classify" property="classify" jdbcType="VARCHAR" />
+    <result column="describes" property="describes" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="disable" property="disable" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wpisen.trace.server.dao.entity.ProjectAppWithBLOBs" extends="BaseResultMap" >
+    <result column="inside_packages" property="insidePackages" jdbcType="LONGVARCHAR" />
+    <result column="relys_lib" property="relysLib" jdbcType="LONGVARCHAR" />
+    <result column="configs_json" property="configsJson" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    app_id, pro_id, app_name, root_name, namespace, platform, classify, describes, create_time, 
+    last_update_time, disable
+  </sql>
+  <sql id="Blob_Column_List" >
+    inside_packages, relys_lib, configs_json
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from project_app
+    where app_id = #{appId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByProjectId"  resultMap="BaseResultMap" resultType="com.wpisen.trace.server.dao.entity.ProjectApp"
+          parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from project_app
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from project_app
+    where app_id = #{appId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wpisen.trace.server.dao.entity.ProjectAppWithBLOBs" >
+    insert into project_app (app_id, pro_id, app_name, 
+      root_name, namespace, platform, 
+      classify, describes, create_time, 
+      last_update_time, disable, inside_packages, 
+      relys_lib, configs_json)
+    values (#{appId,jdbcType=INTEGER}, #{proId,jdbcType=INTEGER}, #{appName,jdbcType=VARCHAR}, 
+      #{rootName,jdbcType=VARCHAR}, #{namespace,jdbcType=VARCHAR}, #{platform,jdbcType=CHAR}, 
+      #{classify,jdbcType=VARCHAR}, #{describes,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{disable,jdbcType=BIT}, #{insidePackages,jdbcType=LONGVARCHAR}, 
+      #{relysLib,jdbcType=LONGVARCHAR}, #{configsJson,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wpisen.trace.server.dao.entity.ProjectAppWithBLOBs" >
+    insert into project_app
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="proId != null" >
+        pro_id,
+      </if>
+      <if test="appName != null" >
+        app_name,
+      </if>
+      <if test="rootName != null" >
+        root_name,
+      </if>
+      <if test="namespace != null" >
+        namespace,
+      </if>
+      <if test="platform != null" >
+        platform,
+      </if>
+      <if test="classify != null" >
+        classify,
+      </if>
+      <if test="describes != null" >
+        describes,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="disable != null" >
+        disable,
+      </if>
+      <if test="insidePackages != null" >
+        inside_packages,
+      </if>
+      <if test="relysLib != null" >
+        relys_lib,
+      </if>
+      <if test="configsJson != null" >
+        configs_json,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="proId != null" >
+        #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="appName != null" >
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="rootName != null" >
+        #{rootName,jdbcType=VARCHAR},
+      </if>
+      <if test="namespace != null" >
+        #{namespace,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null" >
+        #{platform,jdbcType=CHAR},
+      </if>
+      <if test="classify != null" >
+        #{classify,jdbcType=VARCHAR},
+      </if>
+      <if test="describes != null" >
+        #{describes,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        #{disable,jdbcType=BIT},
+      </if>
+      <if test="insidePackages != null" >
+        #{insidePackages,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="relysLib != null" >
+        #{relysLib,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="configsJson != null" >
+        #{configsJson,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wpisen.trace.server.dao.entity.ProjectAppWithBLOBs" >
+    update project_app
+    <set >
+      <if test="proId != null" >
+        pro_id = #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="appName != null" >
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="rootName != null" >
+        root_name = #{rootName,jdbcType=VARCHAR},
+      </if>
+      <if test="namespace != null" >
+        namespace = #{namespace,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null" >
+        platform = #{platform,jdbcType=CHAR},
+      </if>
+      <if test="classify != null" >
+        classify = #{classify,jdbcType=VARCHAR},
+      </if>
+      <if test="describes != null" >
+        describes = #{describes,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        disable = #{disable,jdbcType=BIT},
+      </if>
+      <if test="insidePackages != null" >
+        inside_packages = #{insidePackages,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="relysLib != null" >
+        relys_lib = #{relysLib,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="configsJson != null" >
+        configs_json = #{configsJson,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where app_id = #{appId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wpisen.trace.server.dao.entity.ProjectAppWithBLOBs" >
+    update project_app
+    set pro_id = #{proId,jdbcType=INTEGER},
+      app_name = #{appName,jdbcType=VARCHAR},
+      root_name = #{rootName,jdbcType=VARCHAR},
+      namespace = #{namespace,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=CHAR},
+      classify = #{classify,jdbcType=VARCHAR},
+      describes = #{describes,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      disable = #{disable,jdbcType=BIT},
+      inside_packages = #{insidePackages,jdbcType=LONGVARCHAR},
+      relys_lib = #{relysLib,jdbcType=LONGVARCHAR},
+      configs_json = #{configsJson,jdbcType=LONGVARCHAR}
+    where app_id = #{appId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wpisen.trace.server.dao.entity.ProjectApp" >
+    update project_app
+    set pro_id = #{proId,jdbcType=INTEGER},
+      app_name = #{appName,jdbcType=VARCHAR},
+      root_name = #{rootName,jdbcType=VARCHAR},
+      namespace = #{namespace,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=CHAR},
+      classify = #{classify,jdbcType=VARCHAR},
+      describes = #{describes,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      disable = #{disable,jdbcType=BIT}
+    where app_id = #{appId,jdbcType=INTEGER}
+  </update>
+</mapper>

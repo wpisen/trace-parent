@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wpisen.trace.server.dao.ProjectConfigMapper">
+    <resultMap id="BaseResultMap" type="com.wpisen.trace.server.dao.entity.ProjectConfig">
+        <id column="config_id" property="configId" jdbcType="INTEGER"/>
+        <result column="project_id" property="projectId" jdbcType="INTEGER"/>
+        <result column="app_id" property="appId" jdbcType="INTEGER"/>
+        <result column="dynamic" property="dynamic" jdbcType="BIT"/>
+        <result column="config_key" property="configKey" jdbcType="VARCHAR"/>
+        <result column="config_value" property="configValue" jdbcType="VARCHAR"/>
+        <result column="value_type" property="valueType" jdbcType="CHAR"/>
+        <result column="describes" property="describes" jdbcType="VARCHAR"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    config_id, project_id, app_id, dynamic, config_key, config_value, value_type, describes, 
+    last_update_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from project_config
+        where config_id = #{configId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByProjectId" resultMap="BaseResultMap"  >
+        select
+        <include refid="Base_Column_List"/>
+        from project_config
+        where project_id = #{proId,jdbcType=INTEGER}
+        <if test="appId!=null">
+            and app_id=#{appId,INTEGER}
+        </if>
+        <if test="dynamic==true">
+            and dynamic=1
+        </if>
+        <if test="dynamic==false">
+            and dynamic=0
+        </if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from project_config
+    where config_id = #{configId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert"  parameterType="com.wpisen.trace.server.dao.entity.ProjectConfig">
+    insert into project_config (config_id, project_id, app_id, 
+      dynamic, config_key, config_value, 
+      value_type, describes, last_update_time
+      )
+    values (#{configId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, 
+      #{dynamic,jdbcType=BIT}, #{configKey,jdbcType=VARCHAR}, #{configValue,jdbcType=VARCHAR}, 
+      #{valueType,jdbcType=CHAR}, #{describes,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.wpisen.trace.server.dao.entity.ProjectConfig">
+        insert into project_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="configId != null">
+                config_id,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="dynamic != null">
+                dynamic,
+            </if>
+            <if test="configKey != null">
+                config_key,
+            </if>
+            <if test="configValue != null">
+                config_value,
+            </if>
+            <if test="valueType != null">
+                value_type,
+            </if>
+            <if test="describes != null">
+                describes,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="configId != null">
+                #{configId,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=INTEGER},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=INTEGER},
+            </if>
+            <if test="dynamic != null">
+                #{dynamic,jdbcType=BIT},
+            </if>
+            <if test="configKey != null">
+                #{configKey,jdbcType=VARCHAR},
+            </if>
+            <if test="configValue != null">
+                #{configValue,jdbcType=VARCHAR},
+            </if>
+            <if test="valueType != null">
+                #{valueType,jdbcType=CHAR},
+            </if>
+            <if test="describes != null">
+                #{describes,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wpisen.trace.server.dao.entity.ProjectConfig">
+        update project_config
+        <set>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=INTEGER},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId,jdbcType=INTEGER},
+            </if>
+            <if test="dynamic != null">
+                dynamic = #{dynamic,jdbcType=BIT},
+            </if>
+            <if test="configKey != null">
+                config_key = #{configKey,jdbcType=VARCHAR},
+            </if>
+            <if test="configValue != null">
+                config_value = #{configValue,jdbcType=VARCHAR},
+            </if>
+            <if test="valueType != null">
+                value_type = #{valueType,jdbcType=CHAR},
+            </if>
+            <if test="describes != null">
+                describes = #{describes,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where config_id = #{configId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wpisen.trace.server.dao.entity.ProjectConfig">
+    update project_config
+    set project_id = #{projectId,jdbcType=INTEGER},
+      app_id = #{appId,jdbcType=INTEGER},
+      dynamic = #{dynamic,jdbcType=BIT},
+      config_key = #{configKey,jdbcType=VARCHAR},
+      config_value = #{configValue,jdbcType=VARCHAR},
+      value_type = #{valueType,jdbcType=CHAR},
+      describes = #{describes,jdbcType=VARCHAR},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+    where config_id = #{configId,jdbcType=INTEGER}
+  </update>
+</mapper>

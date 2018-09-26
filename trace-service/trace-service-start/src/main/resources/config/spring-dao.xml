@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close" primary="true">
+        <property name="driverClass" value="${jdbc.driverClass:com.mysql.jdbc.Driver}" />
+        <property name="jdbcUrl" value="${jdbc.url}" />
+        <property name="user" value="${jdbc.user}" />
+        <property name="password" value="${jdbc.pwd}" />
+        <property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+        <property name="acquireIncrement" value="${jdbc.acquireIncrement}" />
+        <property name="initialPoolSize" value="${jdbc.minPoolSize}" />
+        <property name="minPoolSize" value="${jdbc.minPoolSize}" />
+        <property name="maxIdleTime" value="${jdbc.maxIdleTime}" />
+        <property name="autoCommitOnClose" value="${jdbc.autoCommit:false}" />
+        <property name="checkoutTimeout" value="${c3p0.checkoutTimeout:3000}" />
+        <property name="maxIdleTimeExcessConnections" value="${c3p0.maxIdleTimeExcessConnections}" />
+        <property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}" />
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+          primary="true">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" value="classpath:/com/wpisen/trace/server/dao/*.xml" />
+        <property name="configurationProperties">
+            <props>
+                <prop key="cacheEnabled">false</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+          primary="true">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.wpisen.trace.server.dao" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>
+
+</beans>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wpisen.trace.server.dao.ClientGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.wpisen.trace.server.dao.entity.ClientGroup" >
+    <id column="client_id" property="clientId" jdbcType="INTEGER" />
+    <result column="client_name" property="clientName" jdbcType="VARCHAR" />
+    <result column="platform" property="platform" jdbcType="CHAR" />
+    <result column="master" property="master" jdbcType="BIT" />
+    <result column="describes" property="describes" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="disable" property="disable" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    client_id, client_name, platform, master, describes, create_time, last_update_time,
+    disable
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from client_group
+    where client_id = #{clientId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectMaster" resultMap="BaseResultMap" resultType="com.wpisen.trace.server.dao.entity.ClientGroup">
+    select
+    <include refid="Base_Column_List"/>
+    from client_group
+    where platform=#{platform,jdbcType=CHAR}
+    and master=1
+    and disable =1
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from client_group
+    where client_id = #{clientId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wpisen.trace.server.dao.entity.ClientGroup" >
+    insert into client_group (client_id, client_name, platform, 
+      master, describes, create_time,
+      last_update_time, disable)
+    values (#{clientId,jdbcType=INTEGER}, #{clientName,jdbcType=VARCHAR}, #{platform,jdbcType=CHAR}, 
+      #{master,jdbcType=BIT}, #{describes,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{disable,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wpisen.trace.server.dao.entity.ClientGroup" >
+    insert into client_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="clientId != null" >
+        client_id,
+      </if>
+      <if test="clientName != null" >
+        client_name,
+      </if>
+      <if test="platform != null" >
+        platform,
+      </if>
+      <if test="master != null" >
+        master,
+      </if>
+      <if test="describes != null" >
+        describes,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="disable != null" >
+        disable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="clientId != null" >
+        #{clientId,jdbcType=INTEGER},
+      </if>
+      <if test="clientName != null" >
+        #{clientName,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null" >
+        #{platform,jdbcType=CHAR},
+      </if>
+      <if test="master != null" >
+        #{master,jdbcType=BIT},
+      </if>
+      <if test="describes != null" >
+        #{describes,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        #{disable,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wpisen.trace.server.dao.entity.ClientGroup" >
+    update client_group
+    <set >
+      <if test="clientName != null" >
+        client_name = #{clientName,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null" >
+        platform = #{platform,jdbcType=CHAR},
+      </if>
+      <if test="master != null" >
+        master = #{master,jdbcType=BIT},
+      </if>
+      <if test="describes != null" >
+        describes = #{describes,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        disable = #{disable,jdbcType=BIT},
+      </if>
+    </set>
+    where client_id = #{clientId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wpisen.trace.server.dao.entity.ClientGroup" >
+    update client_group
+    set client_name = #{clientName,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=CHAR},
+      master = #{master,jdbcType=BIT},
+      describes = #{describes,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      disable = #{disable,jdbcType=BIT}
+    where client_id = #{clientId,jdbcType=INTEGER}
+  </update>
+</mapper>

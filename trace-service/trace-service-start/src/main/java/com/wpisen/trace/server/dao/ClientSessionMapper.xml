@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wpisen.trace.server.dao.ClientSessionMapper" >
+  <resultMap id="BaseResultMap" type="com.wpisen.trace.server.dao.entity.ClientSession" >
+    <id column="session_id" property="sessionId" jdbcType="INTEGER" />
+    <result column="pro_id" property="proId" jdbcType="INTEGER" />
+    <result column="app_id" property="appId" jdbcType="VARCHAR" />
+    <result column="app_name" property="appName" jdbcType="VARCHAR" />
+    <result column="app_path" property="appPath" jdbcType="VARCHAR" />
+    <result column="version_id" property="versionId" jdbcType="INTEGER" />
+    <result column="version_name" property="versionName" jdbcType="VARCHAR" />
+    <result column="gateway_ip" property="gatewayIp" jdbcType="VARCHAR" />
+    <result column="client_ip" property="clientIp" jdbcType="VARCHAR" />
+    <result column="client_mac_address" property="clientMacAddress" jdbcType="VARCHAR" />
+    <result column="heartbeat" property="heartbeat" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="disable" property="disable" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    session_id, pro_id, app_id,app_name, app_path, version_id, version_name, gateway_ip, client_ip,
+    client_mac_address, heartbeat, create_time, last_update_time, disable
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from client_session
+    where session_id = #{sessionId,jdbcType=INTEGER}
+  </select>
+  <select id="getActiveSession" resultType="com.wpisen.trace.server.dao.entity.ClientSession">
+    select
+    <include refid="Base_Column_List" />
+    from client_session
+    where session_id lastUpdateTime &gt; #{lastModfy,jdbcType=TIMESTAMP}
+    <if test="proId != null">
+      and pro_id=#{proId,jdbcType=INTEGER}
+    </if>
+    and
+    disable=1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from client_session
+    where session_id = #{sessionId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="sessionId" parameterType="com.wpisen.trace.server.dao.entity.ClientSession" >
+    insert into client_session (session_id, pro_id, app_id,app_name ,
+      app_path, version_id, version_name, 
+      gateway_ip, client_ip, client_mac_address, 
+      heartbeat, create_time, last_update_time, 
+      disable)
+    values (#{sessionId,jdbcType=INTEGER}, #{proId,jdbcType=INTEGER}, #{appId,jdbcType=VARCHAR},
+      #{appPath,jdbcType=VARCHAR}, #{versionId,jdbcType=INTEGER}, #{versionName,jdbcType=VARCHAR}, 
+      #{gatewayIp,jdbcType=VARCHAR}, #{clientIp,jdbcType=VARCHAR}, #{clientMacAddress,jdbcType=VARCHAR}, 
+      #{heartbeat,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP}, 
+      #{disable,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="sessionId" parameterType="com.wpisen.trace.server.dao.entity.ClientSession" >
+    insert into client_session
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sessionId != null" >
+        session_id,
+      </if>
+      <if test="proId != null" >
+        pro_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="appName != null" >
+        app_name,
+      </if>
+      <if test="appPath != null" >
+        app_path,
+      </if>
+      <if test="versionId != null" >
+        version_id,
+      </if>
+      <if test="versionName != null" >
+        version_name,
+      </if>
+      <if test="gatewayIp != null" >
+        gateway_ip,
+      </if>
+      <if test="clientIp != null" >
+        client_ip,
+      </if>
+      <if test="clientMacAddress != null" >
+        client_mac_address,
+      </if>
+      <if test="heartbeat != null" >
+        heartbeat,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="disable != null" >
+        disable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sessionId != null" >
+        #{sessionId,jdbcType=INTEGER},
+      </if>
+      <if test="proId != null" >
+        #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null" >
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appPath != null" >
+        #{appPath,jdbcType=VARCHAR},
+      </if>
+      <if test="versionId != null" >
+        #{versionId,jdbcType=INTEGER},
+      </if>
+      <if test="versionName != null" >
+        #{versionName,jdbcType=VARCHAR},
+      </if>
+      <if test="gatewayIp != null" >
+        #{gatewayIp,jdbcType=VARCHAR},
+      </if>
+      <if test="clientIp != null" >
+        #{clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="clientMacAddress != null" >
+        #{clientMacAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="heartbeat != null" >
+        #{heartbeat,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        #{disable,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wpisen.trace.server.dao.entity.ClientSession" >
+    update client_session
+    <set >
+      <if test="proId != null" >
+        pro_id = #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null" >
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appPath != null" >
+        app_path = #{appPath,jdbcType=VARCHAR},
+      </if>
+      <if test="versionId != null" >
+        version_id = #{versionId,jdbcType=INTEGER},
+      </if>
+      <if test="versionName != null" >
+        version_name = #{versionName,jdbcType=VARCHAR},
+      </if>
+      <if test="gatewayIp != null" >
+        gateway_ip = #{gatewayIp,jdbcType=VARCHAR},
+      </if>
+      <if test="clientIp != null" >
+        client_ip = #{clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="clientMacAddress != null" >
+        client_mac_address = #{clientMacAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="heartbeat != null" >
+        heartbeat = #{heartbeat,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        disable = #{disable,jdbcType=BIT},
+      </if>
+    </set>
+    where session_id = #{sessionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wpisen.trace.server.dao.entity.ClientSession" >
+    update client_session
+    set pro_id = #{proId,jdbcType=INTEGER},
+      app_id = #{appId,jdbcType=VARCHAR},
+      app_name = #{appName,jdbcType=VARCHAR},
+      app_path = #{appPath,jdbcType=VARCHAR},
+      version_id = #{versionId,jdbcType=INTEGER},
+      version_name = #{versionName,jdbcType=VARCHAR},
+      gateway_ip = #{gatewayIp,jdbcType=VARCHAR},
+      client_ip = #{clientIp,jdbcType=VARCHAR},
+      client_mac_address = #{clientMacAddress,jdbcType=VARCHAR},
+      heartbeat = #{heartbeat,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      disable = #{disable,jdbcType=BIT}
+    where session_id = #{sessionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateDisable">
+     UPDATE  client_session
+     SET disable=0
+    where pro_id = #{proId,jdbcType=INTEGER}
+    and client_mac_address=#{macAddress,jdbcType=CHAR}
+    and app_path=#{appPath,jdbcType=CHAR}
+    and disable=1
+  </update>
+  <update id="clientEcho">
+    UPDATE  client_session
+    SET heartbeat=heartbeat+1
+    WHERE session_id=#{sessionId,jdbcType=INTEGER}
+  </update>
+</mapper>

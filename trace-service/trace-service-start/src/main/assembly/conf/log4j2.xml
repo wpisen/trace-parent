@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<configuration status="off" monitorInterval="1800">  
+    <properties>  
+        <property name="LOG_HOME">logs</property>  
+        <property name="SERVICE_NAME">trace-service-start</property>
+    </properties>  
+    <appenders>
+		<!-- 定义控制台输出 -->
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
+			<PatternLayout
+				pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />
+		</Console>
+		<!-- 程序员调试日志，每100M一个文件 -->
+		<RollingRandomAccessFile name="DevLog"
+			fileName="${LOG_HOME}/${SERVICE_NAME}.log" filePattern="${LOG_HOME}/${SERVICE_NAME}.%d{yyyy-MM-dd-HH}.log">
+			<PatternLayout
+				pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />
+			<SizeBasedTriggeringPolicy size="100MB" />
+		</RollingRandomAccessFile>
+		<Async name="async-devlog">
+			<AppenderRef ref="DevLog" />
+		</Async>
+	</appenders>
+	<loggers>
+		<!-- Root Logger -->
+		<root level="INFO">
+			<AppenderRef ref="async-devlog" />
+			<appender-ref ref="Console" />
+		</root>
+	</loggers>
+</configuration>  

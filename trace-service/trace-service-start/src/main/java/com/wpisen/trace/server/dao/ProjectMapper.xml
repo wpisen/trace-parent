@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wpisen.trace.server.dao.ProjectMapper" >
+  <resultMap id="BaseResultMap" type="com.wpisen.trace.server.dao.entity.Project" >
+    <id column="pro_id" property="proId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="pro_key" property="proKey" jdbcType="VARCHAR" />
+    <result column="pro_secret" property="proSecret" jdbcType="VARCHAR" />
+    <result column="describes" property="describes" jdbcType="VARCHAR" />
+    <result column="belongs_way" property="belongsWay" jdbcType="CHAR" />
+    <result column="belongs_id" property="belongsId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="disable" property="disable" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pro_id, name, pro_key, pro_secret, describes, belongs_way, belongs_id, create_time,
+    last_update_time, disable
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from project
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByProjectKey" resultMap="BaseResultMap" resultType="com.wpisen.trace.server.dao.entity.Project">
+    select
+    <include refid="Base_Column_List"/>
+    from project
+    where pro_key = #{proKey,jdbcType=INTEGER}
+    and disable=1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from project
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wpisen.trace.server.dao.entity.Project" >
+    insert into project (pro_id, name, pro_key, 
+      pro_secret, describes, belongs_way,
+      belongs_id, create_time, last_update_time, 
+      disable)
+    values (#{proId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{proKey,jdbcType=VARCHAR}, 
+      #{proSecret,jdbcType=VARCHAR}, #{describes,jdbcType=VARCHAR}, #{belongsWay,jdbcType=CHAR},
+      #{belongsId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP}, 
+      #{disable,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wpisen.trace.server.dao.entity.Project" >
+    insert into project
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="proId != null" >
+        pro_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="proKey != null" >
+        pro_key,
+      </if>
+      <if test="proSecret != null" >
+        pro_secret,
+      </if>
+      <if test="describes != null" >
+        describes,
+      </if>
+      <if test="belongsWay != null" >
+        belongs_way,
+      </if>
+      <if test="belongsId != null" >
+        belongs_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="disable != null" >
+        disable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="proId != null" >
+        #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="proKey != null" >
+        #{proKey,jdbcType=VARCHAR},
+      </if>
+      <if test="proSecret != null" >
+        #{proSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="describes != null" >
+        #{describes,jdbcType=VARCHAR},
+      </if>
+      <if test="belongsWay != null" >
+        #{belongsWay,jdbcType=CHAR},
+      </if>
+      <if test="belongsId != null" >
+        #{belongsId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        #{disable,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wpisen.trace.server.dao.entity.Project" >
+    update project
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="proKey != null" >
+        pro_key = #{proKey,jdbcType=VARCHAR},
+      </if>
+      <if test="proSecret != null" >
+        pro_secret = #{proSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="describes != null" >
+        describes = #{describes,jdbcType=VARCHAR},
+      </if>
+      <if test="belongsWay != null" >
+        belongs_way = #{belongsWay,jdbcType=CHAR},
+      </if>
+      <if test="belongsId != null" >
+        belongs_id = #{belongsId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disable != null" >
+        disable = #{disable,jdbcType=BIT},
+      </if>
+    </set>
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wpisen.trace.server.dao.entity.Project" >
+    update project
+    set name = #{name,jdbcType=VARCHAR},
+      pro_key = #{proKey,jdbcType=VARCHAR},
+      pro_secret = #{proSecret,jdbcType=VARCHAR},
+      describes = #{describes,jdbcType=VARCHAR},
+      belongs_way = #{belongsWay,jdbcType=CHAR},
+      belongs_id = #{belongsId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      disable = #{disable,jdbcType=BIT}
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </update>
+</mapper>

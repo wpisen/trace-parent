@@ -2,24 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.wpisen.trace</groupId>
-		<artifactId>trace-parent</artifactId>
-		<version>1.0.0</version>
-	</parent>
-	<groupId>com.wpisen.trace.agent</groupId>
-	<artifactId>trace-agent</artifactId>
+	<groupId>com.wpisen.trace</groupId>
+	<artifactId>trace-parent</artifactId>
 	<packaging>pom</packaging>
+	<version>1.0.0</version>
 	<modules>
-		<module>trace-agent-bootstrap</module>
-
-		<module>trace-agent-base</module>
-		<module>trace-agent-collects</module>
-		<module>trace-agent-collect-servlet</module>
-		
-		<module>test-agent</module>
-		<module>test-server</module>
-		<module>test-web</module>
+		<module>trace-agent</module>
+		<module>trace-service</module>
 	</modules>
 
 	<!-- 定义系统属性 -->

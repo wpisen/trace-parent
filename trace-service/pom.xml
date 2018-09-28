@@ -3,9 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.wpisen.trace.service</groupId>
+	<parent>
+		<groupId>com.wpisen.trace</groupId>
+		<artifactId>trace-parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<groupId>com.wpisen.trace.service</groupId>
     <artifactId>trace-service</artifactId>
-    <version>1.0.0</version>
     <packaging>pom</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><!-- compile插件 -->
@@ -148,9 +152,6 @@
 						<source>${java_source_version}</source>
 						<target>${java_target_version}</target>
 						<encoding>${file_encoding}</encoding>
-						<compilerArgs>
-							<arg>-XX:MaxPermSize=512M</arg>
-						</compilerArgs>
 					</configuration>
 				</plugin>
 				<plugin>

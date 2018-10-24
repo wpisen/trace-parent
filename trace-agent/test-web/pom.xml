@@ -9,7 +9,7 @@
     </parent>
 	<packaging>war</packaging>
 	<properties>
-		<org.springframework.version>4.0.4.RELEASE</org.springframework.version>
+		<org.springframework.version>4.3.18.RELEASE</org.springframework.version>
 		<slf4j-api.version>1.7.12</slf4j-api.version>
 		<log4j-jcl.version>2.3</log4j-jcl.version>
 		<log4j-api.version>2.3</log4j-api.version>

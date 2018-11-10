@@ -242,8 +242,18 @@ public class AgentBootMain {
         LoginParam param = new LoginParam();
         param.setProKey(proKey);
         param.setAppPath(System.getProperty("user.dir"));
-        param.setClientMacAddress(NetUtils.getLocalMac());
-        param.setClientIp(NetUtils.getLocalHost());
+        try {
+        	param.setClientMacAddress(NetUtils.getLocalMac());
+        }catch (Exception e) {
+        	outPrintln("getClientMacAddress error == " + e.getMessage());
+        	param.setClientMacAddress("");
+		}
+        try {
+        	param.setClientIp(NetUtils.getLocalHost());
+        }catch (Exception e) {
+        	outPrintln("getClientIp error == " + e.getMessage());
+        	param.setClientIp("");
+		}
         param.setLoginTime(System.currentTimeMillis());
         param.setPlatform("java");
         String sign = secret + param.toString() + secret;

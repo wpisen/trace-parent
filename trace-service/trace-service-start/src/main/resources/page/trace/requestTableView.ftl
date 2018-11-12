@@ -35,8 +35,8 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <form id="form1" class="navbar-form navbar-left" role="search">
                 <span>时间过滤:</span>
-                <input type="text" name="startTime" id="startTime" class="form-control" placeholder="开始时间">
-                <input type="text" name="endTime" id="endTime" class="form-control" placeholder="截至时间">
+                <input type="text" name="startTime" id="startTime" class="form-control" placeholder="开始时间" autocomplete="off">
+                <input type="text" name="endTime" id="endTime" class="form-control" placeholder="截至时间" autocomplete="off">
                 <span>&nbsp;&nbsp;客户IP:</span>
                 <input name="clientIp" value='${clientIp!""}'type="text" class="form-control" placeholder="客户ip过滤" />
                 <span>&nbsp;&nbsp;目标IP:</span>
